@@ -1,9 +1,10 @@
 import React from 'react';
 
+import Mark1Demo from './mark-1/demo';
+
 function App() {
   return (
-    <div>
-    </div>
+    <Mark1Demo />
   );
 }
 

@@ -1,15 +1,15 @@
 import React from 'react';
 
-function WebComponentWrapper({children, attributes, properties, onEvent, callMethod}) {
+function WebComponentWrapper({children, primitiveAttrs, objectAttrs, onEvent, callMethod}) {
     const componentRef = React.useRef();
   
     React.useEffect(() => {
-      if (properties) {
-        Object.keys(properties).forEach(prop => {
-          componentRef.current[prop] = properties[prop];
+      if (objectAttrs) {
+        Object.keys(objectAttrs).forEach(prop => {
+          componentRef.current[prop] = objectAttrs[prop];
         });
       }
-    }, [properties]);
+    }, [objectAttrs]);
 
     React.useEffect(() => {
       if (onEvent) {
@@ -29,9 +29,8 @@ function WebComponentWrapper({children, attributes, properties, onEvent, callMet
     }, [callMethod]);
     
     const webComponent = React.useMemo(
-      () => React.cloneElement(children, {...attributes, ref: componentRef}),
-      // eslint-disable-next-line
-      [children.type, attributes, properties]
+      () => React.cloneElement(children, {...primitiveAttrs, ref: componentRef}),
+      [children, primitiveAttrs]
     );
 
     return webComponent;
