@@ -10,15 +10,22 @@ const Mark0Demo = () => {
         componentRef.current.scrollToTop(500);
         break;
       case 'bottom':
-          componentRef.current.scrollToBottom(500);
+        componentRef.current.scrollToBottom(500);
         break;
       default:
         break;
     }
   }
 
+  React.useEffect(() => {
+    componentRef.current.addEventListener('ionScrollStart', (event) => {
+      console.log(event);
+    });
+  })
+
   return (
     <div style={{ height: '500px' }}>
+      <h1>Mark 0: using web component directly</h1>
       <ion-content ref={componentRef} color="primary" scroll-y="false">
         <button onClick={() => setLength(length + 5)}>add more</button>
         <button onClick={() => scrollTo('bottom')}>scroll to bottom</button>
