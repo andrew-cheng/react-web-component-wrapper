@@ -15,7 +15,7 @@ function WebComponentWrapper(WrappedComponent, objectAttrs, events) {
     React.useEffect(() => {
       events.forEach(event => {
         componentRef.current.addEventListener(event.name, event.handler);
-      })
+      });
     });
 
     return <WrappedComponent {...props} ref={componentRef} />

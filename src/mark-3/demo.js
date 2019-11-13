@@ -2,18 +2,20 @@ import React from 'react';
 
 import WebComponentWrapper from './wrapper';
 
+const WrappedWebComponent = WebComponentWrapper(
+  'ion-content',
+  [
+    { name: 'color', value: 'primary' },
+    { name: 'scrollY', value: false }
+  ],
+  [
+    { name: 'ionScrollStart', handler: (e) => console.log(e) }
+  ]
+);
+
 const Mark3Demo = () => {
   const [length, setLength] = React.useState(5);
   const wrapperRef = React.createRef();
-
-  const contentProps = [
-    { name: 'color', value: 'primary' },
-    { name: 'scrollY', value: false }
-  ];
-
-  const contentEvents = [
-    { name: 'ionScrollStart', handler: (e) => console.log(e) }
-  ]
 
   const scrollTo = (position) => {
     switch (position) {
@@ -27,12 +29,6 @@ const Mark3Demo = () => {
         break;
     }
   }
-
-  const WrappedWebComponent = WebComponentWrapper(
-    'ion-content',
-    contentProps,
-    contentEvents
-  );
 
   return (
     <div style={{ height: '500px' }}>
