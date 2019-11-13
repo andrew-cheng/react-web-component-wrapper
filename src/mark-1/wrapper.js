@@ -3,6 +3,8 @@ import React from 'react';
 function WebComponentWrapper({ children, primitiveAttrs, objectAttrs, onEvent, callMethod }) {
   const componentRef = React.useRef();
 
+  const [eventListeners, setEventListeners] = React.useState(onEvent);
+
   React.useEffect(() => {
     if (objectAttrs) {
       Object.keys(objectAttrs).forEach(prop => {
@@ -14,10 +16,13 @@ function WebComponentWrapper({ children, primitiveAttrs, objectAttrs, onEvent, c
   React.useEffect(() => {
     if (onEvent) {
       Object.keys(onEvent).forEach(event => {
-        componentRef.current.addEventListener(event, onEvent[event]);
+        let handler = onEvent[event];
+        componentRef.current.removeEventListener(event, eventListeners[event]);
+        componentRef.current.addEventListener(event, handler);
       });
+      setEventListeners(onEvent);
     }
-  }, [onEvent]);
+  }, [onEvent,eventListeners]);
 
   React.useEffect(() => {
     async function callWebComponentMethod() {
